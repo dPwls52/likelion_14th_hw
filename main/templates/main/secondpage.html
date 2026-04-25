@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="page-container">
+        <img src="{% static 'images/clffltm.png' %}" alt="칠리스" width="200px">
+        <img src="{% static 'images/tosemdnlcl.png' %}" alt="샌드위치" width="200px">
+        <p class="tag">LikeLion_14th_session</p>
+        <h1 class="title">2026 멋쟁이사자처럼 14기</h1>
+        <h6 class="welcome">This is Second Page</h6>
+
+        <div class="section">
+            <div class="section-title">🦁 자기소개 🦁</div>
+            <ul>
+                <li>mbti : {{ info.mbti }}</li>
+                <li>좋아하는 것 :</li>
+                <ol>
+                <li>맛집탐방</li>
+                <li>버터떡 맨날 먹기</li>
+                <li>걷기+산책하기</li>
+                <li>라멘</li>
+                <li>아아마시기</li>
+                </ol>
+                <li>세션 어려운데 운영진분들 너무 친절하시고 착해서 감동받았어요ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ</li>
+                            
+            </ul>
+    </div>
+{% endblock %}

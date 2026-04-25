@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="page-container">
+        <img src="{% static 'images/qjxjEjr.png' %}" alt="버터떡" width="200px">
+        <p class="tag">LikeLion_14th_session</p>
+        <h1 class="title">2026 멋쟁이사자처럼 {{ generation }}기</h1>
+        <h6 class="welcome">Welcome Django!</h6>
+
+        <div class="section">
+            <div class="section-title">🦁 2주차 세션 🦁</div>
+            <ul>
+                <li>프로젝트와 앱의 차이 : {{ info.projectapp }}</li>
+                <li>Django MTV 패턴  : {{ info.Django }}</li>
+                <li>템플릿 언어 활용하기 :</li>
+                <ol>
+                <li>변수 사용은 중괄호 두 개 사이에 변수 이름을 넣음</li>
+                <li>반복문은 여러 데이터를 리스트 형태로 보여줄 때 사용</li>
+                <li>url 연결은 미리 정해둔 별명을 이용해서 페이지 이동을 편하게 함</li>
+                </ol>
+                <li>정적 파일 관리 :</li>
+                <ol>
+                <li>static폴더를 만들어 파일들을 모아두고 사용</li>
+                <li>settings파일에서 경로 지정시 파일을 찾을 수 있음</li>
+                <li>views파일에서 static을 불러온 뒤에 파일 경로를 적어서 사용</li>
+                </ol>               
+            </ul>
+        </div>
+
+
+{% endblock %}
