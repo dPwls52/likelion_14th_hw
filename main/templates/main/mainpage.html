@@ -8,6 +8,11 @@
         <h6 class="welcome">Welcome Django!</h6>
 
         <div class="section">
+            <div class="section-title">🦁 포스트 🦁</div>
+            <a href="{% url 'main:postpage' %}"></a>
+        </div>    
+
+        <div class="section">
             <div class="section-title">🦁 2주차 세션 🦁</div>
             <ul>
                 <li>프로젝트와 앱의 차이 : {{ info.projectapp }}</li>
