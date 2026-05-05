@@ -66,6 +66,14 @@ body {
     transition: color 0.2s;
 }
 
+.nav-item a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+}
+
 .nav-item.active {
     border-bottom: 3px solid #111;
     color: #111;
@@ -218,6 +226,15 @@ textarea:focus {
     border-color: #fb6327;
 }
 
+.add-button {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+
 /* 버튼 */
 button {
     margin-top: 10px;
@@ -286,10 +303,54 @@ button:active {
     font-weight: 500;
 }
 
-.nav-item a {
+
+/* ===== 마이페이지 ===== */
+
+.mypage-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* 프로필 카드 */
+.profile-card {
+    background: #fff;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
     display: flex;
     align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: inherit;
+    gap: 32px;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    background: #eee;
+    border-radius: 50%;
+}
+
+.profile-info h2 {
+    font-size: 28px;
+    margin: 0 0 8px 0;
+}
+
+.profile-email {
+    color: #999;
+    margin-bottom: 12px;
+}
+
+.profile-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: #767676;
+}
+
+/* 섹션 */
+.mypage-section h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
 }
