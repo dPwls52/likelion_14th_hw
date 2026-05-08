@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='tags',
-            field=models.ManyToManyField(blank=True, related_name='blogs', to='main.tag'),
+            field=models.ManyToManyField(blank=True, related_name='posts', to='main.tag'),
         ),
     ]
