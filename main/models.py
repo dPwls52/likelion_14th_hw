@@ -9,7 +9,7 @@ class Post(models.Model):
     title = models.CharField(max_length=50)
     writer = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
     content = models.TextField()
-    pub_date = models.DateTimeField()
+    pub_date = models.DateTimeField(null=True)
     mood = models.CharField(max_length=20)
     tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
 
@@ -20,7 +20,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, null=False, blank=False, on_delete=models.CASCADE)
     writer = models.ForeignKey(User, null=False, blank=False, on_delete=models.CASCADE)
     content = models.TextField()
-    pub_date = models.DateTimeField(auto_created=True, null=True)
+    pub_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.post.title}: {self.content[:20]} by {self.writer.profile.nickname}"
