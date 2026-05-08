@@ -14,4 +14,9 @@ urlpatterns = [
     path('edit/<int:post_id>', edit, name='edit'),
     path('update/<int:post_id>', update, name='update'),
     path('delete/<int:post_id>', delete, name='delete'),
+    path('edit_comment/<int:comment_id>', edit_comment, name='edit_comment'),
+    path('update_comment/<int:comment_id>', update_comment, name='update_comment'),
+    path('delete_comment/<int:comment_id>', delete_comment, name='delete_comment'),
+    path('tags', tag_list, name='tag_list'),
+    path('tags/<int:tag_id>', tag_post_list, name='tag_post_list'),
 ]

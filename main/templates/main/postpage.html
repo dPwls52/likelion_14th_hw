@@ -2,32 +2,25 @@
 
 {% block content %}
 {% load static %}
-
-<div style="margin-bottom: 40px; text-align: right;">
-    <div class="divider" style="margin-bottom: 10px;"></div> 
-    <a href="{% url 'main:new_post' %}" style="font-size: 16px; font-weight: bold;">새 글 작성하기</a>
+<div>
+{% if user.is_authenticated %}
+    <a href="{% url 'main:new_post' %}">새 글 작성하기</a>
+{% endif %}
 </div>
-
 <div class="card-grid">
     {% for post in posts %}
         <div class="card">
             <div class="card-content">
                 <h2>{{ post.title }}</h2>
                 <p style="color: red; font-weight: bold; ">{{ post.mood }}</p>
-                <div class="card-header">
-                    <p>{{ post.writer }}</p>
-                    <p>{{ post.pub_date }}</p>
-                </div>
-                <div class="divider"></div>
-                <p class="card-summary">{{ post.summary }}</p>
+                <p>{{ blog.summary }}</p>
+                <a href="{% url 'main:detail' post.id %}">자세히 보기</a>
             </div>
-
             <div class="card-footer">
                 <div class="divider"></div>
-                <a href="{% url 'main:detail' post.id %}">자세히 보기</a>
+                <span>{{ post.writer.profile.nickname }}</span>
             </div>
         </div>
     {% endfor %}
 </div>
-
 {% endblock %}

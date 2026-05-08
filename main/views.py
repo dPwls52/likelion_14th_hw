@@ -37,13 +37,13 @@ def create(request):
     new_post = Post()
 
     new_post.title = request.POST['title']
-    new_post.writer = request.POST['writer']
-    new_post.writer = request.user.username
+    new_post.writer = request.user
     new_post.pub_date = request.POST['pub_date']
     new_post.content = request.POST['content']
     new_post.mood = request.POST['mood']
 
     new_post.save()
+    save_tags(new_post)
 
     return redirect('main:detail', new_post.id)
 
@@ -53,7 +53,31 @@ def postpage(request):
 
 def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    return render(request, 'main/detail.html', {'post': post})
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        new_comments = Comment()
+
+        new_comments.post = post
+        new_comments.writer = request.user
+        new_comments.content = request.POST['content']
+
+        new_comments.save()
+        return redirect('main:detail', post_id)
+
+    comments = Comment.objects.filter(post=post)
+    return render(request, 'main/detail.html', {'post': post, 'comments': comments})
+
+def edit_comment(request, comment_id):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+
+    comment_post = get_object_or_404(Comment, pk=comment_id)
+
+    if comment_post.writer != request.user:
+        return redirect('main:detail', comment_post.id)
+
+    return render(request, 'main/edit_comment.html', {'comment': comment_post})
+
 
 def edit(request, post_id):
     if not request.user.is_authenticated:
@@ -61,7 +85,7 @@ def edit(request, post_id):
 
     edit_post = get_object_or_404(Post, pk=post_id)
 
-    if edit_post.writer != request.user.username:
+    if edit_post.writer != request.user:
         return redirect('main:detail', edit_post.id)
 
     return render(request, 'main/edit.html', {'post': edit_post})
@@ -72,7 +96,7 @@ def delete(request, post_id):
 
     delete_post = get_object_or_404(Post, pk=post_id)
 
-    if delete_post.writer != request.user.username:
+    if delete_post.writer != request.user:
         return redirect('main:detail', delete_post.id)
         
     delete_post.delete()
@@ -85,14 +109,67 @@ def update(request, post_id):
 
     update_post = get_object_or_404(Post, pk=post_id)
 
-    if update_post.writer != request.user.username:
+    if update_post.writer != request.user:
         return redirect('main:detail', update_post.id)
 
     update_post.title = request.POST['title']
-    update_post.writer = request.POST['writer']
+    update_post.writer = request.user
     update_post.pub_date = request.POST['pub_date']
     update_post.content = request.POST['content']
     update_post.mood = request.POST['mood']    
     update_post.save()    
 
+    save_tags(update_post)
+
     return redirect('main:detail', update_post.id)   
+
+def update_comment(request, comment_id):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+
+    update_c = get_object_or_404(Comment, pk=comment_id)
+
+    if update_c.writer != request.user:
+        return redirect('main:detail', update_c.post.id) 
+    
+    update_c.content = request.POST['content']
+    update_c.save() 
+
+    return redirect('main:detail', update_c.post.id)
+
+def delete_comment(request, comment_id):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login')
+
+    delete_c = get_object_or_404(Comment, pk=comment_id)
+
+    if delete_c.writer != request.user:
+        return redirect('main:detail', delete_c.post.id)
+
+    delete_c.delete()
+
+    return redirect('main:detail', delete_c.post.id)
+
+def save_tags(post):
+    words = post.content.split()
+    tag_list = []
+
+    for w in words:
+        if len(w) > 0:
+            if w[0] == '#':
+                tag_list.append(w[1:])
+
+    post.tags.clear()
+
+    for t in tag_list:
+        tag, boolean = Tag.objects.get_or_create(name=t)
+        post.tags.add(tag)
+
+def tag_list(request):
+    tags = Tag.objects.all()
+    return render(request, 'main/tag_list.html', {'tags': tags})
+
+def tag_post_list(request, tag_id):
+    tag = get_object_or_404(Tag, pk=tag_id)
+    posts = tag.posts.all()
+    return render(request, 'main/tag_post_list.html', {'tag': tag, 'posts': posts})
