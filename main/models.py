@@ -23,4 +23,4 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(auto_created=True, null=True)
 
     def __str__(self):
-        return f"{self.blog.title}: {self.content[:20]} by {self.writer.profile.nickname}"
+        return f"{self.post.title}: {self.content[:20]} by {self.writer.profile.nickname}"
