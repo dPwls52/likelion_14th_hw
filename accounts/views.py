@@ -35,19 +35,25 @@ def signup(request):
                 password=request.POST['password'],
             )
 
-            nickname = request.POST['nickname']
-            major = request.POST['major']
-            grade = request.POST.get('grade')
-            profile_image = request.FILES.get('profile_image')
-
-            profile = Profile(
-                user=newuser,
-                nickname=nickname,
-                major=major,
-                grade=grade,
-                profile_image=profile_image,
-            )
+            profile = new_user.profile
+            profile.nickname = request.POST['nickname']
+            profile.major = request.POST['major']
+            profile.profile_image = request.FILES.get('profile_image')
             profile.save()
+
+            # nickname = request.POST['nickname']
+            # major = request.POST['major']
+            # grade = request.POST.get('grade')
+            # profile_image = request.FILES.get('profile_image')
+
+            # profile = Profile(
+            #     user=newuser,
+            #     nickname=nickname,
+            #     major=major,
+            #     grade=grade,
+            #     profile_image=profile_image,
+            # )
+            # profile.save()
 
             auth.login(request, newuser)
             return redirect('main:postpage')
